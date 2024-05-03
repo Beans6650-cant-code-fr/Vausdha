@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Encryption</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+  <center>
+    <div class="checkpassword">
+      <div class="hello">
+        <h1>Sign Up</h1>
+        <p>Username:</p> <input type="text" id="usernameBox"><br><br>
+        <p>Password:</p> <input type="password" id="passwordBox"><br><br>
+        <a href="username.html" class="button">Already have an account? Log In</a><br><br>
+        <div class="btn">
+          <button id="submitBtn" class="button">Submit</button>
+        </div>
+      </div>
+    </div>
+  </center>
+
+  <script>
+    // Wait for the DOM content to be loaded
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get the submit button element
+      var submitBtn = document.getElementById("submitBtn");
+
+      // Add event listener to the submit button
+      submitBtn.addEventListener("click", function () {
+        // Get username and password values
+        var username = document.getElementById("usernameBox").value;
+        var password = document.getElementById("passwordBox").value;
+        
+        // Store username and password in localStorage
+        localStorage.setItem('username', username);
+        localStorage.setItem('password', password);
+
+        // Redirect to index.html
+        window.location.href = 'app.html';
+      });
+    });
+  </script>
+</body>
+
+</html>

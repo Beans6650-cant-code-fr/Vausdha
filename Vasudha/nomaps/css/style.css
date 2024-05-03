@@ -1,0 +1,61 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+ color: darkgreen;
+        
+  @media screen and (max-width: 481px; ) {
+    body {
+      /*Add styles for portrait displays here*/
+    }
+  }
+
+  * padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+
+
+  @media screen and (max-width: 481px) {}
+
+  .wave {
+    position: fixed;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  h1 {
+    color: green;
+    padding: 50px 0px;
+    font-size: 300%;
+  }
+
+  h1:hover {
+    color: lightgreen
+  }
+        .button {
+                border-radius: 25px;
+          background-color: darkgreen; /* Green */
+          border: none;
+          color: white;
+          padding: 15px 32px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+        }
+        input[type=text] {
+                border-radius: 25px;
+          width: 85%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+        }
