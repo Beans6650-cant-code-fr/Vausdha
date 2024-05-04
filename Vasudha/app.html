@@ -59,14 +59,14 @@
     navigator.geolocation.getCurrentPosition(position => {
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
-      document.getElementById("map").innerHTML = `<iframe width="100%" height="10px" src="https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.005}%2C${latitude-0.005}%2C${longitude+0.005}%2C${latitude+0.005}"></embed>`;
+      document.getElementById("map").innerHTML = `<center> <iframe width="25%" height="10px" src="https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.005}%2C${latitude-0.005}%2C${longitude+0.005}%2C${latitude+0.005}"></iframe>`;
       document.getElementById("map").style.position = "fixed";
       document.getElementById("map").style.bottom = "0";  // Show at the bottom of the screen
       document.getElementById("map").style.margin = "auto"; // Center the map
     });
   }
 
-  function displayMessage() {
+  function displayMessage() 
     let themsg = document.getElementById("msg").value;
     window.open(`https://wa.me/${themsg}?text=This%20is%20an%20automated%20message%20sent%20by%20the%20FastSOS%20app%0AThe%20person%20who%20sent%20you%20this%20needs%20help%2C%20their%20location%20is%20https%3A%2F%2Fwww.openstreetmap.org%2F%23map%3D18%2F${latitude}%2F${longitude}`)
   }
