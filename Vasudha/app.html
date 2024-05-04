@@ -9,41 +9,33 @@
     <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
     <style>
         /* Add your CSS styles here */
+        .gfg {
+            font-size: 40px;
+            font-weight: bold;
+            color: #009900;
+            margin-left: 20px;
+        }
+
+        .geeks {
+            margin-left: 150px;
+        }
+
+        p {
+            font-size: 20px;
+            margin-left: 20px;
+        }
     </style>
 </head>
 <body>
-    <center>
-        <h1 onclick="popupText()">InstantSOS</h1> <br>
-        <a href="tel:112" class="button">Call Police</a> <br> <br>
-        <p>Number (International Format)</p>
-        <input type="text" id="msg"><br><br>
-        <button class="button" onclick="displayMessage()">Enter number and open WhatsApp</button>
-        <p id="showinputhere"></p><br><br>
-        <div id="map" style="width: 100%; height: 400px;"></div> <!-- Map container -->
-    </center>
-
+    <div class="gfg">GeeksforGeeks</div>
+    <p>Display location in map</p>
+    <button class="geeks" type="button" onclick="getlocation();">
+        Current Position
+    </button>
+    <div id="demo2" style="width: 500px; height: 500px"></div>
+    <div id="map" style="width: 100%; height: 400px;"></div>
+    
     <script>
-        // JavaScript functions here
-        let clickCount = 0;
-        let latitude, longitude;
-
-        function popupText() {
-            clickCount++;
-            if (clickCount === 3) {
-                alert("STOP CLICKING ME");
-                clickCount = 0;
-            }
-        }
-
-        function displayMessage() {
-            let themsg = document.getElementById("msg").value;
-            if (latitude && longitude) {
-                window.open(`https://wa.me/${themsg}?text=This%20is%20an%20automated%20message%20sent%20by%20the%20FastSOS%20app%0AThe%20person%20who%20sent%20you%20this%20needs%20help%2C%20their%20location%20is%20https%3A%2F%2Fwww.openstreetmap.org%2F%23map%3D18%2F${latitude}%2F${longitude}`);
-            } else {
-                alert("Location not available.");
-            }
-        }
-
         function getlocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showLoc, errHand);
@@ -51,14 +43,26 @@
         }
 
         function showLoc(pos) {
-            latitude = pos.coords.latitude;
-            longitude = pos.coords.longitude;
-            var mapg = L.map('map').setView([latitude, longitude], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapg);
-            L.marker([latitude, longitude]).addTo(mapg)
-                .bindPopup("You are here!").openPopup();
+            latt = pos.coords.latitude;
+            long = pos.coords.longitude;
+            var lattlong = new google.maps.LatLng(latt, long);
+            var OPTions = {
+                center: lattlong,
+                zoom: 10,
+                mapTypeControl: true,
+                navigationControlOptions: {
+                    style: google.maps.NavigationControlStyle.SMALL,
+                },
+            };
+            var mapg = new google.maps.Map(
+                document.getElementById("demo2"),
+                OPTions
+            );
+            var markerg = new google.maps.Marker({
+                position: lattlong,
+                map: mapg,
+                title: "You are here!",
+            });
         }
 
         function errHand(err) {
@@ -77,9 +81,55 @@
                     break;
             }
         }
+    </script>
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([0, 0], 13); // Initialize map with default center and zoom
 
-        // Call the function to get user's location
-        getlocation();
+        // Add tile layer from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to handle successful geolocation
+        function onLocationFound(e) {
+            var radius = e.accuracy;
+
+            // Add a marker at the current location
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("You are here!").openPopup();
+
+            // Add a circle around the current location to indicate accuracy
+            L.circle(e.latlng, radius).addTo(map);
+        }
+
+        // Function to handle geolocation errors
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        // Set up event listeners for location found and error
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+
+        // Request user's location and display on the map
+        map.locate({ setView: true, maxZoom: 16 });
+    </script>
+    
+    <script>
+        var latitude, longitude;
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(position => {
+                latitude = position.coords.latitude;
+                longitude = position.coords.longitude;
+                document.getElementById("map").innerHTML = `<center> <iframe width="25%" height="10px"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.005}%2C${latitude-0.005}%2C${longitude+0.005}%2C${latitude+0.005}"></iframe>`;
+                document.getElementById("map").style.position = "fixed";
+                document.getElementById("map").style.bottom = "0"; // Show at the bottom of the screen
+                document.getElementById("map").style.margin = "auto"; // Center the map
+            });
+        }
     </script>
 </body>
 </html>
