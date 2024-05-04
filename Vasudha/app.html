@@ -24,58 +24,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Location Map</title>
-<style>
-    body, html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-    #map-container {
-        position: fixed;
-        display: inline-text;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px; /* Adjust the height as needed */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    iframe {
-        width: 100%; /* Set the width to 100% to fill the container horizontally */
-        height: 25%;
-        border: none;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Location</title>
+    <style>
+        #map {
+            width: 100%;
+            height: 50vh;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
-<div id="map-container">
-    <iframe id="map" src="about:blank"></iframe>
-</div>
+    <div id="map"></div>
 
-<script>
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showMap);
-        } else {
-            alert("Geolocation is not supported by this browser.");
+    <script>
+        function initMap() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
         }
-    }
 
-    function showMap(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik`;
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            
+            var map = L.map('map').setView([latitude, longitude], 13);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+            
+            L.marker([latitude, longitude]).addTo(map)
+                .bindPopup('Your Location')
+                .openPopup();
+        }
 
-        document.getElementById("map").src = mapUrl;
-    }
-
-    getLocation();
-</script>
+        window.onload = function () {
+            initMap();
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 </body>
 </html>
-
 
 
     </center>
@@ -94,7 +97,7 @@
         }
 
         #map {
-            height: 80%; /* Adjust the height of the map container */
+            height: 50%; /* Adjust the height of the map container */
             width: 100%;
         }
     </style>
