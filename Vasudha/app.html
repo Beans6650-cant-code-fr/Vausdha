@@ -11,7 +11,7 @@
         /* Add your CSS styles here */
     </style>
 </head>
-<body>
+<body onload="getlocation()">
     <center>
         <h1 onclick="popupText()">InstantSOS</h1> <br>
         <a href="tel:112" class="button">Call Police</a> <br> <br>
@@ -19,30 +19,11 @@
         <input type="text" id="msg"><br><br>
         <button class="button" onclick="displayMessage()">Enter number and open WhatsApp</button>
         <p id="showinputhere"></p><br><br>
-        <!DOCTYPE html>
-<html>
-<head>
-	<title>Display location in map</title>
-	<style>
-		.gfg {
-			font-size: 40px;
-			font-weight: bold;
-			color: #009900;
-			margin-left: 20px;
-		}
+	    
+        
 
-		.geeks {
-			margin-left: 150px;
-		}
 
-		p {
-			font-size: 20px;
-			margin-left: 20px;
-		}
-	</style>
-</head>
 
-<body>
 
 	<div id="demo2" style="width: 500px; height: 500px"></div>
 	<script src="https://maps.google.com/maps/api/js?sensor=false">
@@ -53,7 +34,7 @@
 				navigator.geolocation.getCurrentPosition(showLoc, errHand);
 			}
         }
-      window.onload = getlocation;
+      
 		function showLoc(pos) {
 			latt = pos.coords.latitude;
 			long = pos.coords.longitude;
