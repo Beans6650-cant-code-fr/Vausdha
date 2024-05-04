@@ -13,39 +13,6 @@
     <style>
         #map {
             height: 400px;
-            width: 100%;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="map"></div>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script>
-        var map = L.map('map').setView([0, 0], 9);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        function onLocationFound(e) {
-            var radius = e.accuracy;
-
-            L.circle(e.latlng, radius).addTo(map);
-        }
-
-        function onLocationError(e) {
-            alert(e.message);
-        }
-
-        map.on('locationfound', onLocationFound);
-        map.on('locationerror', onLocationError);
-
-        map.locate({ setView: true, maxZoom: 16 });
-    </script>
-
-    <center>
         <h1 onclick="popupText()">InstantSOS</h1> <br>
         <a href="tel:112" class="button">Call Police</a> <br> <br>
         <p>Number (International Format)</p>
@@ -55,6 +22,70 @@
 
         <p id="showinputhere"></p>
         <br><br>
+        </style>
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Current Location</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
+        #map {
+            height: 80%; /* Adjust the height of the map container */
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+    <h1>Current Location</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([0, 0], 13); // Initialize map with default center and zoom
+
+        // Add tile layer from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to handle successful geolocation
+        function onLocationFound(e) {
+            var radius = e.accuracy;
+
+            // Add a marker at the current location
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("You are here!").openPopup();
+
+            // Add a circle around the current location to indicate accuracy
+            L.circle(e.latlng, radius).addTo(map);
+        }
+
+        // Function to handle geolocation errors
+        function onLocationError(e) {
+            alert(e.message);
+        }
+
+        // Set up event listeners for location found and error
+        map.on('locationfound', onLocationFound);
+        map.on('locationerror', onLocationError);
+
+        // Request user's location and display on the map
+        map.locate({ setView: true, maxZoom: 16 });
+    </script>
+</body>
+
+</html>
+
     </center>
 
     <script>
