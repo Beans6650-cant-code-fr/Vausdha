@@ -59,8 +59,8 @@
     navigator.geolocation.getCurrentPosition(position => {
       latitude = position.coords.latitude;
       longitude = position.coords.longitude;
-      document.getElementById("map").innerHTML = `<embed width="100%" height="50%" src="https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.005}%2C${latitude-0.005}%2C${longitude+0.005}%2C${latitude+0.005}"></embed>`;
-      document.getElementById("map").style.position = "floating";
+      document.getElementById("map").innerHTML = `<iframe width="100%" height="10px" src="https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.005}%2C${latitude-0.005}%2C${longitude+0.005}%2C${latitude+0.005}"></embed>`;
+      document.getElementById("map").style.position = "fixed";
       document.getElementById("map").style.bottom = "0";  // Show at the bottom of the screen
       document.getElementById("map").style.margin = "auto"; // Center the map
     });
