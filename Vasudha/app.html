@@ -16,10 +16,7 @@
 
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet" />
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Show Current Location</title>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -31,7 +28,6 @@
     </style>
 </head>
 <body>
-    <h1>Show Current Location</h1>
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -45,8 +41,8 @@
         function onLocationFound(e) {
             var radius = e.accuracy / 2;
 
-            L.marker(e.latlng).addTo(map)
-                .bindPopup("You are within " + radius + " meters from this point").openPopup();
+    
+            
 
             L.circle(e.latlng, radius).addTo(map);
         }
